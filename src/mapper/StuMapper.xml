@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- 接口+mapper映射文件
+	要求
+	接口和映名
+	Id和方法名称保持一致射文件同包同
+	参数类型和parmaterType保持一致
+	返回值类型和ResultType保持一致
+  -->
+ <mapper namespace="mapper.StuMapper">
+ 
+ 	<select id="selectAll" resultType="stu">
+ 		select * from student
+ 	</select>
+ 	
+ 	<select id="selectOne" resultType="stu">
+ 		select * from student where name = #{name}
+ 	</select>
+ 	
+ 	<insert id="insertOne" parameterType="stu">
+ 		insert into student values (#{id},#{name},#{sex},#{age},#{department})
+ 	</insert>
+ 	
+ 	<delete id="deleteOne">
+ 		delete from student where id = #{value}
+ 	</delete>
+ 	
+ 	<select id="selectLike" resultType="stu">
+ 		select * from student where name like '%${value}%'
+ 	</select>
+ 	
+ 	<!-- 动态sql -->
+ 	<select id="selectIf" resultType="stu">
+ 		select * from student where 1 = 1
+ 		<if test="name != null">
+ 			and name = #{name}
+ 		</if>
+ 	</select>
+ 	
+	<select id="selectChoose" resultType="stu">
+		select * from student where 1 = 1
+		<choose>
+			<when test="sex != null">
+				and sex = #{sex}
+			</when>
+			<otherwise>
+				and sex = '女' and age between #{lower} and #{higher}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectWhen" resultType="stu">
+		select * from student 
+		<where>
+			<if test="sex != null">
+				and sex = #{sex}
+			</if>
+			<if test="department != null">
+				and department = #{department}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectIn" resultType="stu">
+		select * from student where age in
+		<foreach collection="list" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach>
+	</select>
+ 	
+ </mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- 一个select/insert就是一个mappedStatement对象
+		id:唯一标识
+		#{}:占位符 简单类型: 值可随意
+		${}:连接符
+		parameterType:输入参数类型(可省略)
+		resultType:返回值类型
+		resultMap:用于引入外部的ResultMap标签
+	-->
+ 
+ <mapper namespace="JJ">
+ 	<select id="selectAll" resultType="entity.Student">
+ 		select * from student
+ 	</select>
+ 	
+ 	<select id="selectOne" resultType="entity.Student">
+ 		select * from student where id = #{value}
+ 	</select>
+ 	
+ 	<insert id="insertOne" parameterType="entity.Student">
+ 		insert into student values (#{id},#{name},#{sex},#{age},#{department})
+ 	</insert>
+ 	
+ 	<delete id="deleteOne">
+ 		delete from student where id = #{value}
+ 	</delete>
+ </mapper>
